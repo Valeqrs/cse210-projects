@@ -12,13 +12,13 @@ public class Journal
     {
     }
 
-    //Add a new entry
+    // Add a new entry
     public void AddEntry(Entry newEntry)
     {
         _entries.Add(newEntry);
     }
 
-    //Display all entries
+    // Display all entries
     public void DisplayAll()
     {
         if (_entries.Count == 0)
@@ -33,20 +33,20 @@ public class Journal
         }
     }
 
-    //Save to file
+    // Save to file
     public void SaveToFile(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
             foreach (Entry entry in _entries)
             {
-                writer.WriteLine($"{entry._date}|{entry._promptText}|{entry._entryText}");
+                writer.WriteLine($"{entry._date}|{entry._promptText}|{entry._entryText}|{entry._mood}");
             }
         }
         Console.WriteLine($"Journal saved to {filename}");
     }
 
-    //Load from file
+    // Load from file
     public void LoadFromFile(string filename)
     {
         if (!File.Exists(filename))
@@ -61,12 +61,13 @@ public class Journal
         foreach (string line in lines)
         {
             string[] parts = line.Split('|');
-            if (parts.Length == 3)
+            if (parts.Length == 4)
             {
                 Entry entry = new Entry();
                 entry._date = parts[0];
                 entry._promptText = parts[1];
                 entry._entryText = parts[2];
+                entry._mood = parts[3];
                 _entries.Add(entry);
             }
         }

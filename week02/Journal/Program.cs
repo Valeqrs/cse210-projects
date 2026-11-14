@@ -1,5 +1,12 @@
 using System;
 
+// Creativity :
+// 1. Each journal entry now includes a "mood" field. The user is asked how they are feeling
+//    when writing an entry. The mood is displayed with the entry and is saved to / loaded from
+//    the file (as a fourth field separated by '|').
+// 2. The PromptGenerator uses a shuffle-bag approach so that prompts do not repeat until
+//    all prompts have been used at least once. This improves variety compared to pure random
+//    selection with replacement.
 class Program
 {
     static void Main(string[] args)
@@ -31,10 +38,14 @@ class Program
                     Console.Write("Your response: ");
                     string response = Console.ReadLine();
 
+                    Console.Write("How are you feeling? (e.g., Happy, Sad, Neutral): ");
+                    string mood = Console.ReadLine();
+
                     Entry newEntry = new Entry();
                     newEntry._date = DateTime.Now.ToString("MM/dd/yyyy");
                     newEntry._promptText = prompt;
                     newEntry._entryText = response;
+                    newEntry._mood = mood;
 
                     journal.AddEntry(newEntry);
                     Console.WriteLine("Entry saved!");
